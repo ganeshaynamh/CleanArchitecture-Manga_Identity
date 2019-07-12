@@ -11,35 +11,40 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Repositories
 {
     public class AuthenticateRepository : IAuthenticateRepository
     {
-        private UserManager<IdentityUser> UserManager;
-        private SignInManager<IdentityUser> SignInManager;
+        private UserManager<ApplicationUser> UserManager;
+        private SignInManager<ApplicationUser> SignInManager;
 
-        public AuthenticateRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthenticateRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
-        public async Task<object> Createuser(IdentityUser applicationUser, string password)
+        public async Task<object> Createuser(ApplicationUser applicationUser, string password)
         {
             return await UserManager.CreateAsync(applicationUser, password);
         }
 
-        public async Task<IdentityUser> FindByEmail(string email)
+        public async Task<ApplicationUser> FindByEmail(string email)
         {
             return UserManager.Users.SingleOrDefault(r => r.Email == email);
         }
 
-        public async Task<IdentityUser> FindByName(string name)
+        public async Task<ApplicationUser> FindByName(string name)
         {
             return UserManager.Users.SingleOrDefault(r => r.UserName == name);
         }
 
-        public async Task<IdentityUser> FindByPhoneNumber(string phonenumber)
+        public async Task<ApplicationUser> FindByPhoneNumber(string phonenumber)
         {
             return UserManager.Users.SingleOrDefault(r => r.PhoneNumber == phonenumber);
         }
 
-        public async Task<SignInResult> Logincheck1(IdentityUser applicationUser, string password)
+        public async Task<ApplicationUser> FindBySSN(string ssn)
+        {
+            return UserManager.Users.SingleOrDefault(r => r.SSN == ssn);
+        }
+
+        public async Task<SignInResult> Logincheck1(ApplicationUser applicationUser, string password)
         {
             return await SignInManager.PasswordSignInAsync(applicationUser, password, false, false);
         }

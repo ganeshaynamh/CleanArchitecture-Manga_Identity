@@ -5,10 +5,11 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
     using Manga.Domain.Customers;
     using Manga.Domain.UserModel;
     using Manga.Domain.ValueObjects;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class MangaContext : IdentityDbContext
+    public sealed class MangaContext : IdentityDbContext<ApplicationUser,IdentityRole<string>,string>
     {
         public MangaContext(DbContextOptions options) : base(options)
         {
@@ -16,12 +17,12 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
         }
 
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public new DbSet<Customer> Users { get; set; }
         public DbSet<Credit> Credits { get; set; }
         public DbSet<Debit> Debits { get; set; }
         
         
-       //public DbSet<ApplicationUser> applicationUsers { get; set; }
+      // public DbSet<ApplicationUser> applicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,18 +32,18 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
                 .ToTable("Account");
 
             modelBuilder.Entity<Customer>()
-                .ToTable("Customer")
+                .ToTable("Users")
                 .Property(b => b.SSN)
                 .HasConversion(
                     v => v.ToString(),
-                    v => new SSN(v));
+                    v => (v));
 
             modelBuilder.Entity<Customer>()
-                .ToTable("Customer")
-                .Property(b => b.Name)
+                .ToTable("Users")
+                .Property(b => b.UserName)
                 .HasConversion(
                     v => v.ToString(),
-                    v => new Name(v));
+                    v => (v));
 
             modelBuilder.Entity<Debit>()
                 .ToTable("Debit")
@@ -59,7 +60,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
                     v => new PositiveAmount(v));
 
             modelBuilder.Entity<Customer>().HasData(
-                new { Id = new Guid("197d0438-e04b-453d-b5de-eca05960c6ae"), Name = new Name("Test User"), SSN = new SSN("19860817-9999") }
+                new { Id = new Guid("197d0438-e04b-453d-b5de-eca05960c6ae"), Name ="Test User", SSN = "19860817-9999" }
             );
 
             modelBuilder.Entity<Account>().HasData(
@@ -85,6 +86,20 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
                     TransactionDate = DateTime.UtcNow
                 }
             );
+
+            modelBuilder.Entity<ApplicationUser>(e => e.ToTable("Users").HasKey(x => x.Id));
+
+            modelBuilder.Entity<IdentityRole<string>>(e => e.ToTable("Roles").HasKey(x => x.Id));
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>(e => e.ToTable("RoleClaim").HasKey(x => x.Id));
+
+            modelBuilder.Entity<IdentityUserRole<string>>(e => e.ToTable("UserRoles").HasKey(x => x.RoleId));
+
+            modelBuilder.Entity<IdentityUserLogin<string>>(e => e.ToTable("UserLogin").HasKey(x => x.UserId));
+
+            modelBuilder.Entity<IdentityUserClaim<string>>(e => e.ToTable("UserClaims").HasKey(x => x.Id));
+
+            modelBuilder.Entity<IdentityUserToken<string>>(e => e.ToTable("UserTokens").HasKey(x => x.UserId));
 
 
         }

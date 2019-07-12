@@ -9,12 +9,14 @@ namespace Manga.Application.Repositories
 {
     public interface IAuthenticateRepository
     {
-        Task<IdentityUser> FindByName(string name);
-        Task<IdentityUser> FindByPhoneNumber(string phonenumber);
+        Task<ApplicationUser> FindByName(string name);
+        Task<ApplicationUser> FindByPhoneNumber(string phonenumber);
 
-        Task<IdentityUser> FindByEmail(string email);
+        Task<ApplicationUser> FindByEmail(string email);
 
-        Task<SignInResult> Logincheck1(IdentityUser applicationUser, string password);
-        Task<object> Createuser(IdentityUser applicationUser, string password);
+        Task<ApplicationUser> FindBySSN(string ssn);
+
+        Task<SignInResult> Logincheck1(ApplicationUser applicationUser, string password);
+        Task<object> Createuser(ApplicationUser applicationUser, string password);
     }
 }

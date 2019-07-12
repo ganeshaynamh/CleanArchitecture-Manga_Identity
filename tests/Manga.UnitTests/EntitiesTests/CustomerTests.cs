@@ -12,8 +12,7 @@ namespace Manga.UnitTests.EntitiesTests
         {
             // Arrange
             var sut = new Customer(
-                new SSN("741214-3054"),
-                new Name("Sammy Fredriksson"));
+                "741214-3054","Sammy Fredriksson");
 
             var account = new Account(sut.Id);
 

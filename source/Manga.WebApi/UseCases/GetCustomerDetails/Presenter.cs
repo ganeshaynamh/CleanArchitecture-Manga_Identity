@@ -40,7 +40,7 @@ namespace Manga.WebApi.UseCases.GetCustomerDetails
             CustomerDetailsModel model = new CustomerDetailsModel(
                 output.CustomerId,
                 output.SSN,
-                output.Name,
+                output.UserName,
                 accounts
             );
 

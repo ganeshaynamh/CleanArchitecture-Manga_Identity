@@ -21,5 +21,7 @@ namespace Manga.WebApi.SignUpController
 
         [Required, RegularExpression(@"^([0-9]{10})$", ErrorMessage = "please enter a valid Phone Number..")]
         public string PhoneNumber { get; set; }
+        [Required]
+        public string SSN { get; set; }
     }
 }

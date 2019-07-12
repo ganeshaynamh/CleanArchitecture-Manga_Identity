@@ -36,9 +36,9 @@ namespace Manga.WebApi.UseCases.Register
             accounts.Add(account);
 
             CustomerModel model = new CustomerModel(
-                output.Customer.CustomerId,
+                output.Customer.Id,
                 output.Customer.SSN,
-                output.Customer.Name,
+                output.Customer.UserName,
                 accounts
             );
 

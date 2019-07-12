@@ -41,8 +41,8 @@ namespace Manga.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddIdentity<IdentityUser, IdentityRole>() 
-                  .AddEntityFrameworkStores<MangaContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole<string>>() 
+                  .AddEntityFrameworkStores<MangaContext>().AddDefaultTokenProviders();
 
             var key = Encoding.ASCII.GetBytes(Configuration["JwtKey"]);
             services.AddAuthentication(x =>
@@ -73,7 +73,8 @@ namespace Manga.WebApi
         //{
         //    services.AddDbContext<MangaContext>(options =>
         //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+        //    services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MangaContext>();
+
         //}
 
         private void AddSQLPersistence(IServiceCollection services)
@@ -84,7 +85,7 @@ namespace Manga.WebApi
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-           // services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MangaContext>();
+           
 
             services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
             services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();

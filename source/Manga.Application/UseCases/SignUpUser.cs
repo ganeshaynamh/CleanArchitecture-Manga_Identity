@@ -29,16 +29,19 @@ namespace Manga.Application.UseCases
         {
           
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = input.UserName,
                 Email = input.Email,
-                PhoneNumber = input.PhoneNumber
+                PhoneNumber = input.PhoneNumber,
+                SSN = input.SSN
+                
             };
 
             var Email = await AuthenticationRepository.FindByEmail(input.Email);
             var Username = await AuthenticationRepository.FindByName(input.UserName);
             var Phone = await AuthenticationRepository.FindByPhoneNumber(input.PhoneNumber);
+            var SSN = await AuthenticationRepository.FindBySSN(input.SSN);
 
             if (Email != null)
             {
@@ -51,6 +54,10 @@ namespace Manga.Application.UseCases
             if (Phone != null)
             {
                 OutputHandler.Error("Phone number Already Exist");
+            }
+            if (SSN != null)
+            {
+                OutputHandler.Error("SSN Name Already Exist");
             }
             else
             {

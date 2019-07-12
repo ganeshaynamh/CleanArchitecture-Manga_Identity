@@ -6,9 +6,9 @@ namespace Manga.Domain.Customers
 
     public class Customer : ICustomer
     { 
-        public Guid Id { get; protected set; }
-        public Name Name { get; protected set; }
-        public SSN SSN { get; protected set; }
+        public Guid Id { get; set; }
+        public string UserName { get; protected set; }
+        public string SSN { get; protected set; }
         public IReadOnlyCollection<Guid> Accounts
         {
             get
@@ -27,11 +27,11 @@ namespace Manga.Domain.Customers
 
         private Customer() { }
 
-        public Customer(SSN ssn, Name name)
+        public Customer(string ssn, string Username)
         {
             Id = Guid.NewGuid();
             SSN = ssn;
-            Name = name;
+            UserName = Username;
         }
 
         public void LoadAccounts(ICollection<Guid> accountIds)

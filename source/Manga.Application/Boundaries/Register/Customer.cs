@@ -6,9 +6,9 @@ namespace Manga.Application.Boundaries.Register
 
     public sealed class Customer
     {
-        public Guid CustomerId { get; }
+        public Guid Id { get; }
         public string SSN { get; }
-        public string Name { get; }
+        public string UserName { get; }
         public IReadOnlyList<Account> Accounts { get; }
 
         public Customer(
@@ -16,9 +16,9 @@ namespace Manga.Application.Boundaries.Register
             List<Account> accounts)
         {
             var customerEntity = (Domain.Customers.Customer) customer;
-            CustomerId = customerEntity.Id;
+            Id = customerEntity.Id;
             SSN = customerEntity.SSN.ToString();
-            Name = customerEntity.Name.ToString();
+            UserName = customerEntity.UserName.ToString();
             Accounts = accounts;
         }
     }

@@ -13,5 +13,6 @@ namespace Manga.WebApi.AuthController
 
         [Required]
         public string Password { get; set; }
+        public string FullName { get; set; }
     }
 }

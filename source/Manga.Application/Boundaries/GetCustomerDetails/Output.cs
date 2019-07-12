@@ -8,7 +8,7 @@ namespace Manga.Application.Boundaries.GetCustomerDetails
     {
         public Guid CustomerId { get; }
         public string SSN { get; }
-        public string Name { get; }
+        public string UserName { get; }
         public IReadOnlyList<Account> Accounts { get; }
 
         public Output(
@@ -18,7 +18,7 @@ namespace Manga.Application.Boundaries.GetCustomerDetails
             Customer customerEntity = (Customer) customer;
             CustomerId = customerEntity.Id;
             SSN = customerEntity.SSN.ToString();
-            Name = customerEntity.Name.ToString();
+            UserName = customerEntity.UserName.ToString();
             Accounts = accounts;
         }
     }

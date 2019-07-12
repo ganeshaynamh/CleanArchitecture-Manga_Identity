@@ -18,13 +18,13 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
 
         public async Task Add(ICustomer customer)
         {
-            await _context.Customers.AddAsync((Customer) customer);
+            await _context.Users.AddAsync((Customer) customer);
             await _context.SaveChangesAsync();
         }
 
         public async Task<ICustomer> Get(Guid id)
         {
-            Customer customer = await _context.Customers
+            Customer customer = await _context.Users
                 .FindAsync(id);
 
             var accounts = _context.Accounts
@@ -39,7 +39,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
 
         public async Task Update(ICustomer customer)
         {
-            _context.Customers.Update((Customer) customer);
+            _context.Users.Update((Customer) customer);
             await _context.SaveChangesAsync();
         }
     }

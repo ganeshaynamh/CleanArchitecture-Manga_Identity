@@ -17,13 +17,13 @@
 
         public async Task Add(ICustomer customer)
         {
-            _context.Customers.Add((Customer)customer);
+            _context.Users.Add((Customer)customer);
             await Task.CompletedTask;
         }
 
         public async Task<ICustomer> Get(Guid id)
         {
-            Customer customer = _context.Customers
+            Customer customer = _context.Users
                 .Where(e => e.Id == id)
                 .SingleOrDefault();
 
@@ -32,7 +32,7 @@
 
         public async Task Update(ICustomer customer)
         {
-            Customer customerOld = _context.Customers
+            Customer customerOld = _context.Users
                 .Where(e => e.Id == customer.Id)
                 .SingleOrDefault();
 

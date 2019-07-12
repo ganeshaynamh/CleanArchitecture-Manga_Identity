@@ -4,11 +4,11 @@ namespace Manga.Application.Boundaries.Register
 
     public sealed class Input
     {
-        public SSN SSN { get; }
-        public Name Name { get; }
+        public string SSN { get; }
+        public string Name { get; }
         public PositiveAmount InitialAmount { get; }
         
-        public Input(SSN ssn, Name name, PositiveAmount initialAmount)
+        public Input(string ssn, string name, PositiveAmount initialAmount)
         {
             SSN = ssn;
             Name = name;

@@ -20,7 +20,7 @@ namespace Manga.IntegrationTests.EntityFrameworkTests
                 .Options;
 
             var factory = new DefaultEntitiesFactory();
-            var customer = factory.NewCustomer(new SSN("198608177955"), new Name("Ivan Paulovich"));
+            var customer = factory.NewCustomer("198608177955","Ivan Paulovich");
 
             using(var context = new MangaContext(options))
             {
@@ -30,7 +30,7 @@ namespace Manga.IntegrationTests.EntityFrameworkTests
 
             using(var context = new MangaContext(options))
             {
-                Assert.Equal(1, context.Customers.Count());
+                Assert.Equal(1, context.Users.Count());
             }
         }
 

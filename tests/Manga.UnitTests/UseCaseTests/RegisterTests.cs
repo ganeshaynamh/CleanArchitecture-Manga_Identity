@@ -28,8 +28,8 @@ namespace Manga.UnitTests.UseCasesTests
         [InlineData(3300)]
         public async Task Register_WritesOutput_InputIsValid(double amount)
         {
-            var ssn = new SSN("8608178888");
-            var name = new Name("Ivan Paulovich");
+            var ssn = "8608178888";
+            var name = "Ivan Paulovich";
 
             var entityFactory = new DefaultEntitiesFactory();
             var presenter = new Presenter();
@@ -52,7 +52,7 @@ namespace Manga.UnitTests.UseCasesTests
             var actual = presenter.Registers.First();
             Assert.NotNull(actual);
             Assert.Equal(ssn.ToString(), actual.Customer.SSN);
-            Assert.Equal(name.ToString(), actual.Customer.Name);
+            Assert.Equal(name.ToString(), actual.Customer.UserName);
             Assert.Equal(amount, actual.Account.CurrentBalance);
         }
     }

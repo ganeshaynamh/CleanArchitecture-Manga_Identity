@@ -88,7 +88,7 @@ namespace Manga.Application.UseCases
 
         }
 
-        private async Task<object> logincheck(IdentityUser applicationUser, string password)
+        private async Task<object> logincheck(ApplicationUser applicationUser, string password)
         {
             if (applicationUser == null)
             {
