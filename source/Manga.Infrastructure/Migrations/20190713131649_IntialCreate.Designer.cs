@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
+namespace Manga.Infrastructure.Migrations
 {
     [DbContext(typeof(MangaContext))]
-    [Migration("20190712063557_CretateIdentitySchema")]
-    partial class CretateIdentitySchema
+    [Migration("20190713131649_IntialCreate")]
+    partial class IntialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                             Id = new Guid("f5117315-e789-491a-b662-958c37237f9b"),
                             AccountId = new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"),
                             Amount = 400.0,
-                            TransactionDate = new DateTime(2019, 7, 12, 6, 35, 55, 520, DateTimeKind.Utc).AddTicks(1097)
+                            TransactionDate = new DateTime(2019, 7, 13, 13, 16, 48, 159, DateTimeKind.Utc).AddTicks(5576)
                         });
                 });
 
@@ -86,7 +86,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                             Id = new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"),
                             AccountId = new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"),
                             Amount = 400.0,
-                            TransactionDate = new DateTime(2019, 7, 12, 6, 35, 55, 520, DateTimeKind.Utc).AddTicks(6671)
+                            TransactionDate = new DateTime(2019, 7, 13, 13, 16, 48, 160, DateTimeKind.Utc).AddTicks(2901)
                         });
                 });
 
@@ -95,21 +95,13 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("SSN");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("197d0438-e04b-453d-b5de-eca05960c6ae"),
-                            Name = "Test User",
-                            SSN = "19860817-9999"
-                        });
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Manga.Domain.UserModel.ApplicationUser", b =>
@@ -162,10 +154,10 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users");
+                    b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -186,7 +178,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Roles");
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -206,7 +198,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaim");
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -226,64 +218,58 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims");
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("LoginProvider")
-                        .IsRequired();
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
-
-                    b.Property<string>("ProviderKey")
-                        .IsRequired();
-
-                    b.HasKey("UserId");
-
-                    b.HasAlternateKey("LoginProvider", "ProviderKey");
-
-                    b.ToTable("UserLogin");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("RoleId");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.HasKey("RoleId");
+                    b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasAlternateKey("UserId", "RoleId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .IsRequired();
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.HasAlternateKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("UserTokens");
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -307,7 +293,7 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);

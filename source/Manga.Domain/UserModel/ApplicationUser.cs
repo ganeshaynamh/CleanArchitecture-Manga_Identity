@@ -6,12 +6,8 @@ using System.Text;
 
 namespace Manga.Domain.UserModel
 {
-    public class ApplicationUser : IdentityUser<string>
+    public class ApplicationUser : IdentityUser
     {
-        public string Id { get; set; }
-
-        [ForeignKey("Id")]
-        public ApplicationUser User { get; set; }
         public string SSN { get; set; }
     }
 }

@@ -2,14 +2,26 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
+namespace Manga.Infrastructure.Migrations
 {
-    public partial class CretateIdentitySchema : Migration
+    public partial class IntialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Account",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Account", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -19,11 +31,11 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -45,11 +57,52 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Credit",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AccountId = table.Column<Guid>(nullable: false),
+                    Amount = table.Column<double>(nullable: true),
+                    TransactionDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Credit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Debit",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AccountId = table.Column<Guid>(nullable: false),
+                    Amount = table.Column<double>(nullable: true),
+                    TransactionDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Debit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    SSN = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleClaim",
+                name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -60,17 +113,17 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleClaim", x => x.Id);
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleClaim_Roles_RoleId",
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
+                        principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserClaims",
+                name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -81,63 +134,61 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserClaims", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserClaims_Users_UserId",
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLogin",
+                name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLogin", x => x.UserId);
-                    table.UniqueConstraint("AK_UserLogin_LoginProvider_ProviderKey", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_UserLogin_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    RoleId = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoles", x => x.RoleId);
-                    table.UniqueConstraint("AK_UserRoles_UserId_RoleId", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_UserRoles_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserId",
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTokens",
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -147,55 +198,65 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserTokens", x => x.UserId);
-                    table.UniqueConstraint("AK_UserTokens_UserId_LoginProvider_Name", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_UserTokens_Users_UserId",
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Credit",
-                keyColumn: "Id",
-                keyValue: new Guid("f5117315-e789-491a-b662-958c37237f9b"),
-                column: "TransactionDate",
-                value: new DateTime(2019, 7, 12, 6, 35, 55, 520, DateTimeKind.Utc).AddTicks(1097));
+            migrationBuilder.InsertData(
+                table: "Account",
+                columns: new[] { "Id", "CustomerId" },
+                values: new object[] { new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), new Guid("197d0438-e04b-453d-b5de-eca05960c6ae") });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
+                table: "Credit",
+                columns: new[] { "Id", "AccountId", "Amount", "TransactionDate" },
+                values: new object[] { new Guid("f5117315-e789-491a-b662-958c37237f9b"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 13, 13, 16, 48, 159, DateTimeKind.Utc).AddTicks(5576) });
+
+            migrationBuilder.InsertData(
                 table: "Debit",
-                keyColumn: "Id",
-                keyValue: new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"),
-                column: "TransactionDate",
-                value: new DateTime(2019, 7, 12, 6, 35, 55, 520, DateTimeKind.Utc).AddTicks(6671));
+                columns: new[] { "Id", "AccountId", "Amount", "TransactionDate" },
+                values: new object[] { new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 13, 13, 16, 48, 160, DateTimeKind.Utc).AddTicks(2901) });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleClaim_RoleId",
-                table: "RoleClaim",
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                table: "Roles",
+                table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserClaims_UserId",
-                table: "UserClaims",
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "Users",
+                table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "Users",
+                table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
@@ -204,39 +265,37 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RoleClaim");
+                name: "Account");
 
             migrationBuilder.DropTable(
-                name: "UserClaims");
+                name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "UserLogin");
+                name: "AspNetUserClaims");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
+                name: "AspNetUserLogins");
 
             migrationBuilder.DropTable(
-                name: "UserTokens");
+                name: "AspNetUserRoles");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Credit");
+
+            migrationBuilder.DropTable(
+                name: "Debit");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
-            migrationBuilder.UpdateData(
-                table: "Credit",
-                keyColumn: "Id",
-                keyValue: new Guid("f5117315-e789-491a-b662-958c37237f9b"),
-                column: "TransactionDate",
-                value: new DateTime(2019, 6, 26, 18, 7, 24, 681, DateTimeKind.Utc).AddTicks(3880));
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
-            migrationBuilder.UpdateData(
-                table: "Debit",
-                keyColumn: "Id",
-                keyValue: new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"),
-                column: "TransactionDate",
-                value: new DateTime(2019, 6, 26, 18, 7, 24, 681, DateTimeKind.Utc).AddTicks(4900));
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

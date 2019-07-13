@@ -41,8 +41,8 @@ namespace Manga.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddIdentity<ApplicationUser, IdentityRole<string>>() 
-                  .AddEntityFrameworkStores<MangaContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>() 
+                  .AddEntityFrameworkStores<MangaContext>();
 
             var key = Encoding.ASCII.GetBytes(Configuration["JwtKey"]);
             services.AddAuthentication(x =>
