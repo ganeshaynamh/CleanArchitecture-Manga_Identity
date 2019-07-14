@@ -1,4 +1,5 @@
 ﻿using Manga.Application.Repositories;
+using Manga.Domain.Customers;
 using Manga.Domain.UserModel;
 
 using Microsoft.AspNetCore.Identity;
@@ -14,11 +15,15 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Repositories
     {
         private UserManager<ApplicationUser> UserManager;
         private SignInManager<ApplicationUser> SignInManager;
+        private readonly MangaContext mangaContext;
 
-        public AuthenticateRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthenticateRepository(UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager,
+            MangaContext mangaContext)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this.mangaContext = mangaContext;
         }
         public async Task<object> Createuser(ApplicationUser applicationUser, string password)
         {
@@ -43,6 +48,22 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess.Repositories
         public async Task<ApplicationUser> FindBySSN(string ssn)
         {
             return UserManager.Users.SingleOrDefault(r => r.SSN == ssn);
+        }
+
+        public async Task<ICustomer> GetCustomer(Guid id)
+        {
+            ApplicationUser user = await UserManager.FindByIdAsync(id.ToString());
+
+            var customer = new Customer(Guid.Parse(user.Id),user.SSN, user.UserName);
+
+            var accounts = mangaContext.Accounts
+                .Where(e => e.CustomerId == id)
+                .Select(e => e.Id)
+                .ToList();
+
+            customer.LoadAccounts(accounts);
+
+            return customer;
         }
 
         public async Task<SignInResult> Logincheck1(ApplicationUser applicationUser, string password)

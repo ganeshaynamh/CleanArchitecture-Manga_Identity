@@ -3,7 +3,7 @@ namespace Manga.Infrastructure.InMemoryGateway
     using System.Collections.ObjectModel;
 
     public sealed class Presenter : 
-        Application.Boundaries.Register.IOutputHandler,
+        //Application.Boundaries.Register.IOutputHandler,
         Application.Boundaries.Deposit.IOutputHandler,
         Application.Boundaries.Withdraw.IOutputHandler,
         Application.Boundaries.CloseAccount.IOutputHandler,
@@ -11,7 +11,7 @@ namespace Manga.Infrastructure.InMemoryGateway
         Application.Boundaries.GetCustomerDetails.IOutputHandler
     {
         public Collection<string> Errors { get; }
-        public Collection<Application.Boundaries.Register.Output> Registers { get; }
+        //public Collection<Application.Boundaries.Register.Output> Registers { get; }
         public Collection<Application.Boundaries.Deposit.Output> Deposits { get; }
         public Collection<Application.Boundaries.Withdraw.Output> Withdrawals { get; }
         public Collection<Application.Boundaries.CloseAccount.Output> ClosedAccounts { get; }
@@ -22,7 +22,7 @@ namespace Manga.Infrastructure.InMemoryGateway
         public Presenter()
         {
             Errors = new Collection<string>();
-            Registers = new Collection<Application.Boundaries.Register.Output>();
+            //Registers = new Collection<Application.Boundaries.Register.Output>();
             Deposits = new Collection<Application.Boundaries.Deposit.Output>();
             Withdrawals = new Collection<Application.Boundaries.Withdraw.Output>();
             ClosedAccounts = new Collection<Application.Boundaries.CloseAccount.Output>();
@@ -35,10 +35,11 @@ namespace Manga.Infrastructure.InMemoryGateway
             Errors.Add(message);
         }
 
-        public void Handle(Application.Boundaries.Register.Output output)
-        {
-            Registers.Add(output);
-        }
+        //public void Handle(Application.Boundaries.Register.Output output)
+        //{
+        //    Registers.Add(output);
+        //}
+
 
         public void Handle(Application.Boundaries.Deposit.Output output)
         {

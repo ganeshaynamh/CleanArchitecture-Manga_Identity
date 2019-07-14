@@ -83,8 +83,11 @@ namespace Manga.WebApi
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            //services.AddScoped<ICustomerRepository, CustomerRepository>();
+            //services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            //services.AddSingleton-- single object for entire application,cart example.
+            //services.transient 
            
 
             services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
@@ -115,7 +118,7 @@ namespace Manga.WebApi
             services.AddScoped<Manga.WebApi.UseCases.Deposit.Presenter, Manga.WebApi.UseCases.Deposit.Presenter>();
             services.AddScoped<Manga.WebApi.UseCases.GetAccountDetails.Presenter, Manga.WebApi.UseCases.GetAccountDetails.Presenter>();
             services.AddScoped<Manga.WebApi.UseCases.GetCustomerDetails.Presenter, Manga.WebApi.UseCases.GetCustomerDetails.Presenter>();
-            services.AddScoped<Manga.WebApi.UseCases.Register.Presenter, Manga.WebApi.UseCases.Register.Presenter>();
+            //services.AddScoped<Manga.WebApi.UseCases.Register.Presenter, Manga.WebApi.UseCases.Register.Presenter>();
             services.AddScoped<Manga.WebApi.UseCases.Withdraw.Presenter, Manga.WebApi.UseCases.Withdraw.Presenter>();
             services.AddScoped<Manga.WebApi.AuthController.Presenter, Manga.WebApi.AuthController.Presenter>();
             services.AddScoped<Manga.WebApi.SignUpController.Presenter, Manga.WebApi.SignUpController.Presenter>();
@@ -124,7 +127,7 @@ namespace Manga.WebApi
             services.AddScoped<Manga.Application.Boundaries.Deposit.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.Deposit.Presenter>());
             services.AddScoped<Manga.Application.Boundaries.GetAccountDetails.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.GetAccountDetails.Presenter>());
             services.AddScoped<Manga.Application.Boundaries.GetCustomerDetails.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.GetCustomerDetails.Presenter>());
-            services.AddScoped<Manga.Application.Boundaries.Register.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.Register.Presenter>());
+            //services.AddScoped<Manga.Application.Boundaries.Register.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.Register.Presenter>());
             services.AddScoped<Manga.Application.Boundaries.Withdraw.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.UseCases.Withdraw.Presenter>());
             services.AddScoped<Manga.Application.Boundaries.LoginUser.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.AuthController.Presenter>());
             services.AddScoped<Manga.Application.Boundaries.SignUpUser.IOutputHandler>(x => x.GetRequiredService<Manga.WebApi.SignUpController.Presenter>());
@@ -134,7 +137,7 @@ namespace Manga.WebApi
             services.AddScoped<Manga.Application.Boundaries.Deposit.IUseCase, Manga.Application.UseCases.Deposit>();
             services.AddScoped<Manga.Application.Boundaries.GetAccountDetails.IUseCase, Manga.Application.UseCases.GetAccountDetails>();
             services.AddScoped<Manga.Application.Boundaries.GetCustomerDetails.IUseCase, Manga.Application.UseCases.GetCustomerDetails>();
-            services.AddScoped<Manga.Application.Boundaries.Register.IUseCase, Manga.Application.UseCases.Register>();
+            //services.AddScoped<Manga.Application.Boundaries.Register.IUseCase, Manga.Application.UseCases.Register>();
             services.AddScoped<Manga.Application.Boundaries.Withdraw.IUseCase, Manga.Application.UseCases.Withdraw>();
             services.AddScoped<Manga.Application.Boundaries.LoginUser.IUseCase, Manga.Application.UseCases.LoginUser>();
             services.AddScoped<Manga.Application.Boundaries.SignUpUser.IUseCase, Manga.Application.UseCases.SignUpUser>();

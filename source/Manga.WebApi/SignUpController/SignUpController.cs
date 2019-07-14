@@ -26,7 +26,7 @@ namespace Manga.WebApi.SignUpController
         {
             if (ModelState.IsValid)
             {
-                await UseCase.Execute(new Input(model.UserName, model.Email, model.password, model.PhoneNumber,model.SSN));
+                await UseCase.Execute(new Input(model.UserName, model.Email, model.password, model.PhoneNumber,model.SSN,model.InitialAmount));
                 return Presenter.ViewModel;
             }
             else

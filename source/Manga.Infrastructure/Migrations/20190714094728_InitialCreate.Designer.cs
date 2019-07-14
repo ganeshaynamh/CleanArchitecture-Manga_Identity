@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Manga.Infrastructure.Migrations
 {
     [DbContext(typeof(MangaContext))]
-    [Migration("20190713131649_IntialCreate")]
-    partial class IntialCreate
+    [Migration("20190714094728_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace Manga.Infrastructure.Migrations
                             Id = new Guid("f5117315-e789-491a-b662-958c37237f9b"),
                             AccountId = new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"),
                             Amount = 400.0,
-                            TransactionDate = new DateTime(2019, 7, 13, 13, 16, 48, 159, DateTimeKind.Utc).AddTicks(5576)
+                            TransactionDate = new DateTime(2019, 7, 14, 9, 47, 26, 797, DateTimeKind.Utc).AddTicks(9293)
                         });
                 });
 
@@ -86,22 +86,8 @@ namespace Manga.Infrastructure.Migrations
                             Id = new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"),
                             AccountId = new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"),
                             Amount = 400.0,
-                            TransactionDate = new DateTime(2019, 7, 13, 13, 16, 48, 160, DateTimeKind.Utc).AddTicks(2901)
+                            TransactionDate = new DateTime(2019, 7, 14, 9, 47, 26, 798, DateTimeKind.Utc).AddTicks(5196)
                         });
-                });
-
-            modelBuilder.Entity("Manga.Domain.Customers.Customer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("SSN");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Manga.Domain.UserModel.ApplicationUser", b =>
@@ -135,7 +121,8 @@ namespace Manga.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("SSN");
+                    b.Property<string>("SSN")
+                        .IsRequired();
 
                     b.Property<string>("SecurityStamp");
 

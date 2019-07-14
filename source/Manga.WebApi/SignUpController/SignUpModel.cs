@@ -23,5 +23,8 @@ namespace Manga.WebApi.SignUpController
         public string PhoneNumber { get; set; }
         [Required]
         public string SSN { get; set; }
+        [Required]
+        public double InitialAmount { get; set; }
+
     }
 }

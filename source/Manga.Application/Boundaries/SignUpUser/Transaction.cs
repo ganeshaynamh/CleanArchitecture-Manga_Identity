@@ -1,4 +1,4 @@
-namespace Manga.Application.Boundaries.Register
+namespace Manga.Application.Boundaries.SignUpUser
 {
     using System;
     public sealed class Transaction

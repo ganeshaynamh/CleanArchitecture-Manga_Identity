@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EntityFrameworkTests\CustomerRepositoryTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
@@ -20,4 +24,8 @@
     <ProjectReference Include="..\..\source\Manga.Infrastructure\Manga.Infrastructure.csproj" />
     <ProjectReference Include="..\..\source\Manga.WebApi\Manga.WebApi.csproj" />
   </ItemGroup>
+
+   <ItemGroup>
+     <Folder Include="EntityFrameworkTests\" />
+   </ItemGroup>
 </Project>

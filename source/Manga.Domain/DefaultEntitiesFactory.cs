@@ -13,9 +13,9 @@ namespace Manga.Domain
             return account;
         }
 
-        public ICustomer NewCustomer(string ssn, string UserName)
+        public ICustomer NewCustomer(Guid Id,string ssn, string UserName)
         {
-            var customer = new Customer(ssn, UserName);
+            var customer = new Customer(Id,ssn, UserName);
             return customer;
         }
     }

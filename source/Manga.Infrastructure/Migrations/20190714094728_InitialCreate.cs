@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Manga.Infrastructure.Migrations
 {
-    public partial class IntialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,7 @@ namespace Manga.Infrastructure.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    SSN = table.Column<string>(nullable: true)
+                    SSN = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,19 +86,6 @@ namespace Manga.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Debit", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    SSN = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,12 +202,12 @@ namespace Manga.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Credit",
                 columns: new[] { "Id", "AccountId", "Amount", "TransactionDate" },
-                values: new object[] { new Guid("f5117315-e789-491a-b662-958c37237f9b"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 13, 13, 16, 48, 159, DateTimeKind.Utc).AddTicks(5576) });
+                values: new object[] { new Guid("f5117315-e789-491a-b662-958c37237f9b"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 14, 9, 47, 26, 797, DateTimeKind.Utc).AddTicks(9293) });
 
             migrationBuilder.InsertData(
                 table: "Debit",
                 columns: new[] { "Id", "AccountId", "Amount", "TransactionDate" },
-                values: new object[] { new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 13, 13, 16, 48, 160, DateTimeKind.Utc).AddTicks(2901) });
+                values: new object[] { new Guid("3d6032df-7a3b-46e6-8706-be971e3d539f"), new Guid("4c510cfe-5d61-4a46-a3d9-c4313426655f"), 400.0, new DateTime(2019, 7, 14, 9, 47, 26, 798, DateTimeKind.Utc).AddTicks(5196) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -287,9 +274,6 @@ namespace Manga.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Debit");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

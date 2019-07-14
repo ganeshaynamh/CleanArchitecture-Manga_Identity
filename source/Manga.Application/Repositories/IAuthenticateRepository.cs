@@ -1,4 +1,5 @@
-﻿using Manga.Domain.UserModel;
+﻿using Manga.Domain.Customers;
+using Manga.Domain.UserModel;
 using Microsoft.AspNetCore.Identity;
 
 using System;
@@ -16,6 +17,8 @@ namespace Manga.Application.Repositories
         Task<ApplicationUser> FindByEmail(string email);
 
         Task<ApplicationUser> FindBySSN(string ssn);
+
+        Task<ICustomer> GetCustomer(Guid id);
 
         Task<SignInResult> Logincheck1(ApplicationUser applicationUser, string password);
         Task<object> Createuser(ApplicationUser applicationUser, string password);
