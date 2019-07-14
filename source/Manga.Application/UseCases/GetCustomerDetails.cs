@@ -7,30 +7,41 @@ namespace Manga.Application.UseCases
     using Manga.Application.Repositories;
     using Manga.Domain.Accounts;
     using Manga.Domain.Customers;
+    using Manga.Application.Common;
 
     public sealed class GetCustomerDetails : IUseCase
     {
         private readonly IOutputHandler _outputHandler;
         private readonly ICustomerRepository _customerRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IAuthenticateRepository authenticateRepository;
 
         public GetCustomerDetails(
             IOutputHandler outputHandler,
             ICustomerRepository customerRepository,
-            IAccountRepository accountRepository)
+            IAccountRepository accountRepository,
+            IAuthenticateRepository authenticateRepository)
         {
             _outputHandler = outputHandler;
             _customerRepository = customerRepository;
             _accountRepository = accountRepository;
+            this.authenticateRepository = authenticateRepository;
         }
 
         public async Task Execute(Input input)
         {
-            ICustomer customer = await _customerRepository.Get(input.CustomerId);
+            Guid CustomerId;
+            var result = CommonAccess.commonAccessCustomer(input.CustomerId, authenticateRepository).Result.ToString();
+            if (!Guid.TryParse(result, out CustomerId))
+            {
+                _outputHandler.Error(result);
+                return;
+            }
+            ICustomer customer = await _customerRepository.Get(CustomerId);
 
             if (customer == null)
             {
-                _outputHandler.Error($"The customer {input.CustomerId} does not exists or is not processed yet.");
+                _outputHandler.Error($"The customer {CustomerId} does not exists or is not processed yet.");
                 return;
             }
 

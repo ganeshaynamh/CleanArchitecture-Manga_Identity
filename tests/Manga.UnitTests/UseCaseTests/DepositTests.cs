@@ -9,9 +9,17 @@ namespace Manga.UnitTests.UseCasesTests
     using Manga.Domain.ValueObjects;
     using System.Threading.Tasks;
     using Application.Boundaries.Deposit;
+    using Manga.Application.Repositories;
 
     public sealed class DepositTests
     {
+        private readonly IAuthenticateRepository authenticateRepository;
+
+        public DepositTests(IAuthenticateRepository authenticateRepository)
+        {
+            this.authenticateRepository = authenticateRepository;
+        }
+
         [Theory]
         [InlineData(100)]
         [InlineData(200)]
@@ -25,11 +33,13 @@ namespace Manga.UnitTests.UseCasesTests
             
             var sut = new Deposit(
                 presenter,
-                accountRepository
+                accountRepository,
+                authenticateRepository
             );
 
             await sut.Execute(
-                new Input(context.DefaultAccountId, new PositiveAmount(amount)));
+                new Input(context.DefaultAccountId.ToString(), new PositiveAmount(amount)));
+
 
             var output = presenter.Deposits.First();
             Assert.Equal(amount, output.Transaction.Amount);

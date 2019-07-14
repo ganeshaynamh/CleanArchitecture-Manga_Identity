@@ -8,6 +8,7 @@ namespace Manga.Application.Repositories
     {
         Task<IAccount> Get(Guid id);
         Task Add(IAccount account, ICredit credit);
+        Task<Guid> GetAccountId(Guid CustomerId);
         Task Update(IAccount account, ICredit credit);
         Task Update(IAccount account, IDebit debit);
         Task Delete(IAccount account);

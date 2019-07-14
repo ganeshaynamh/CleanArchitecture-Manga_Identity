@@ -42,6 +42,11 @@
             return await Task.FromResult<Account>(account);
         }
 
+        public Task<Guid> GetAccountId(Guid CustomerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Update(IAccount account, ICredit credit)
         {
             Account accountOld = _context.Accounts

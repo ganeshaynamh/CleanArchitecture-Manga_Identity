@@ -57,6 +57,11 @@ namespace Manga.Infrastructure.EntityFrameworkDataAccess
             return account;
         }
 
+        public async Task<Guid> GetAccountId(Guid CustomerId)
+        {
+            return _context.Accounts.SingleOrDefault(r => r.CustomerId == CustomerId).Id;
+        }
+
         public async Task Update(IAccount account, ICredit credit)
         {
             await _context.Credits.AddAsync((Credit) credit);

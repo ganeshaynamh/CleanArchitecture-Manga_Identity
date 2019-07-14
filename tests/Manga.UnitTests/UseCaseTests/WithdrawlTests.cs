@@ -10,9 +10,16 @@ namespace Manga.UnitTests.UseCasesTests
     using System.Threading.Tasks;
     using Manga.Domain.ValueObjects;
     using Manga.Application.Boundaries.Withdraw;
+    using Manga.Application.Repositories;
 
     public sealed class WithdrawlTests
     {
+        private readonly IAuthenticateRepository authenticateRepository;
+
+        public WithdrawlTests(IAuthenticateRepository authenticateRepository)
+        {
+            this.authenticateRepository = authenticateRepository;
+        }
         [Theory]
         [InlineData("c725315a-1de6-4bf7-aecf-3af8f0083681", 100)]
         public async Task Withdraw_Valid_Amount(string accountId, double amount)
@@ -23,11 +30,12 @@ namespace Manga.UnitTests.UseCasesTests
 
             var sut = new Withdraw(
                 presenter,
-                accountRepository
+                accountRepository,
+                authenticateRepository
             );
 
             await sut.Execute(new Input(
-                Guid.Parse(accountId),
+                accountId,
                 new PositiveAmount(amount)));
 
             var actual = presenter.Withdrawals.First();

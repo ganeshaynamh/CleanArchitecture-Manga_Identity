@@ -25,7 +25,7 @@ namespace Manga.WebApi.UseCases.GetCustomerDetails
         /// Get a Customer details 
         /// </summary>
         [HttpGet("{customerId}", Name = "GetCustomer")]
-        public async Task<IActionResult> GetCustomer(Guid Id)
+        public async Task<IActionResult> GetCustomer(string Id)
         {
             await _getCustomerDetailsUseCase.Execute(new Input(Id));
             return _presenter.ViewModel;
