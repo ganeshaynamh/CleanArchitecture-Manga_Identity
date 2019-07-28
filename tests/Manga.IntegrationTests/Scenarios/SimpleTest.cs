@@ -1,7 +1,6 @@
 ﻿using Manga.IntegrationTests.testcase;
 using System.Net;
 using System.Threading.Tasks;
-
 using Xunit;
 
 namespace Manga.IntegrationTests.Scenarios
@@ -10,10 +9,10 @@ namespace Manga.IntegrationTests.Scenarios
     public class SimpleTest
     {
         private readonly Integrationtest integrationTests;
-        public SimpleTest(Integrationtest integrationTest)
+        public SimpleTest()
         {
-            integrationTests = integrationTest;
-            //integrationTests = new Integrationtest();
+           // integrationTests = integrationTest;
+            integrationTests = new Integrationtest();
 
         }
         [Fact]

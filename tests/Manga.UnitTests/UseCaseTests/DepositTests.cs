@@ -18,6 +18,7 @@ namespace Manga.UnitTests.UseCasesTests
         public DepositTests(IAuthenticateRepository authenticateRepository)
         {
             this.authenticateRepository = authenticateRepository;
+            //authenticateRepository = new IAuthenticateRepository();
         }
 
         [Theory]
