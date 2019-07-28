@@ -1,14 +1,13 @@
 ﻿using Manga.Domain.UserModel;
-using NUnit.Framework;
 using System.Linq;
-
+using Xunit;
 
 namespace Manga.AcceptanceTests.Entities_Tests
 {
-    [TestFixture]
+   
     public class VerifyInputFiled
     {
-        [Test]
+        [Fact]
         public void verifyclassattributes()
         {
             InputFieldTest cpv = new InputFieldTest();
@@ -16,11 +15,12 @@ namespace Manga.AcceptanceTests.Entities_Tests
             {
                 UserName = "jagdishparmar",
                 Email = "jd@gmail.com",
-                PhoneNumber = "8866825150"
+                PhoneNumber = "8866825150",
+                SSN ="12345678-9999"
 
             };
             var errorcount = cpv.myValidation(Appuser).Count();
-            Assert.AreEqual(0, errorcount);
+            Assert.Equal(0, errorcount);
 
 
         }
