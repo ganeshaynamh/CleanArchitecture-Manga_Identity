@@ -9,6 +9,7 @@ namespace Manga.AcceptanceTests
     using Newtonsoft.Json.Linq;
     using System;
     using Microsoft.AspNetCore.Mvc.Testing;
+    using System.Net;
 
     public sealed class SunnyDayTests : IClassFixture<WebApplicationFactory<StartupDevelopment>>
     {
@@ -39,12 +40,14 @@ namespace Manga.AcceptanceTests
         {
             var client = _factory.CreateClient();
             string result = await client.GetStringAsync("/api/Customers/" + customerId);
+          
         }
 
         private async Task GetAccount(string accountId)
         {
             var client = _factory.CreateClient();
             string result = await client.GetStringAsync("/api/Accounts/" + accountId);
+           
         }
 
         private async Task<Tuple<string, string>> Register(double initialAmount)
