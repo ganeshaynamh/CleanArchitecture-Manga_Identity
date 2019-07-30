@@ -7,16 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="EntityFrameworkTests\CustomerRepositoryTests.cs" />
+    <Compile Remove="EntityFrameworkTests\**" />
+    <Compile Remove="Scenarios\**" />
+    <EmbeddedResource Remove="EntityFrameworkTests\**" />
+    <EmbeddedResource Remove="Scenarios\**" />
+    <None Remove="EntityFrameworkTests\**" />
+    <None Remove="Scenarios\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="testcase\Collection.cs" />
+    <Compile Remove="testcase\Integrationtest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
@@ -27,8 +39,4 @@
     <ProjectReference Include="..\..\source\Manga.Infrastructure\Manga.Infrastructure.csproj" />
     <ProjectReference Include="..\..\source\Manga.WebApi\Manga.WebApi.csproj" />
   </ItemGroup>
-
-   <ItemGroup>
-     <Folder Include="EntityFrameworkTests\" />
-   </ItemGroup>
 </Project>

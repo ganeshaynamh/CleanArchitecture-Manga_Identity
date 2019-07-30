@@ -18,7 +18,7 @@ namespace Manga.IntegrationTests.Scenarios
         [Fact]
         public async Task SimpleReturnOkResponse()
         {
-            var response = await integrationTests.Client.GetAsync("/SimpleTest");
+            var response = await integrationTests.Client.GetAsync("/api/Accounts");
             //response.EnsureSuccessStatusCode();
             //response.StatusCode.Should().Be(HttpStatusCode.OK);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
